@@ -113,7 +113,8 @@ public class Espetaculo {
        }
 
        if (totDisp >= qtd) return true;
-       else return false;
+       
+       return false;
    }
 
    public boolean Vagas(int qtd)
@@ -127,7 +128,7 @@ public class Espetaculo {
        }
 
        if (totDisp >= qtd) return true;
-       else return false;
+       return false;
    }
 
 }
