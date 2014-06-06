@@ -2,6 +2,7 @@ package br.com.caelum.agiletickets.models;
 
 import static com.google.common.collect.Lists.newArrayList;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -13,8 +14,10 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import org.joda.time.Days;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalTime;
+import org.joda.time.Weeks;
 
 @Entity
 public class Espetaculo {
@@ -95,10 +98,28 @@ public class Espetaculo {
      * a cada 7 dias: 01/01, 08/01, 15/01, 22/01 e 29/01.
      * 
      * Repare que a data da primeira sessao é sempre a data inicial.
+	 * @throws Exception 
      */
-	public List<Sessao> criaSessoes(LocalDate inicio, LocalDate fim, LocalTime horario, Periodicidade periodicidade) {
-		// ALUNO: Não apague esse metodo. Esse sim será usado no futuro! ;)
-		return null;
+	public List<Sessao> criaSessoes(LocalDate inicio, LocalDate fim, LocalTime horario, Periodicidade periodicidade) throws Exception {
+		int numeroSessoes = 0;
+		if (!inicio.isEqual(fim)){
+			if(inicio.isAfter(fim)){
+				throw new Exception("A data inicial deve ser menor que a data final");
+		
+			}
+		}	
+		if (Periodicidade.DIARIA.equals(periodicidade)){ 
+			numeroSessoes = Days.daysBetween(inicio,fim).getDays()+1;
+		}else if (Periodicidade.SEMANAL.equals(periodicidade)) {
+			numeroSessoes = Weeks.weeksBetween(inicio, fim).getWeeks()+1; 
+		}
+		
+		List<Sessao> sessoes = new ArrayList<Sessao>();	
+		for (int i = 0; i < numeroSessoes; i++) {
+			sessoes.add(new Sessao());
+			
+		}
+		return sessoes;
 	}
 	
 	public boolean Vagas(int qtd, int min)
